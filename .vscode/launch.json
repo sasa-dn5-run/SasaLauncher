@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "renderer process debug",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9229,
+            "webRoot": "${workspaceRoot}",
+            "timeout": 30000
+        }
+    ]
+}

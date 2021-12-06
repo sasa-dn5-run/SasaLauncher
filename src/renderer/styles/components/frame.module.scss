@@ -1,0 +1,84 @@
+@use "../Constants.scss" as *;
+
+.frame {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  user-select: none;
+
+  color: $BASE_COLOR;
+  background-color: $BG_COLOR;
+  box-shadow: $BG_COLOR 0px 0px 10px 0px;
+
+  .ResizableTop{
+    height: 5px;
+    width: 100%;
+    -webkit-app-region: no-drag;
+  }
+
+  .frameMain{
+    display: flex;
+    height: $FrameHeight;
+    -webkit-app-region: drag;
+
+    .frameTitleName {
+      margin-right: 150px;
+      font-family: $DefaultFont;
+      h1,
+      p {
+        display: inline-block;
+        margin: 0;
+      }
+      h1 {
+        margin: 0 10px 0 10px;
+        font-size: 1rem;
+      }
+      p {
+        font-size: 0.75rem;
+      }
+    }
+    @mixin AppFrameButton {
+      position: absolute;
+      top: 0;
+      
+      display: inline-block;
+      width: 50px;
+      height: 100%;
+
+      background-color: rgba(0, 0, 0, 0.25);
+
+      transition: 0.25s;
+
+      -webkit-app-region: no-drag;
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        height: 100%;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    }
+    .AppCloseButton {
+      right: 0;
+      @include AppFrameButton;
+    }
+
+    .AppMaximizeButton {
+      right: 50px;
+      @include AppFrameButton;
+    }
+
+    .AppHideButton {
+      right: 100px;
+      @include AppFrameButton;
+    }
+  }
+}

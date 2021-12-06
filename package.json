@@ -1,0 +1,45 @@
+{
+  "name": "electron-template",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "author": "ddPn08",
+  "scripts": {
+    "builder": "ts-node build/index",
+    "compile": "yarn builder compile",
+    "dev": "yarn builder dev",
+    "format": "prettier --write --ignore-path .gitignore './src/**/*.ts'",
+    "lint": "eslint --fix './src/**/*.ts'",
+    "fix": "yarn lint && yarn format"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^16.11.10",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "css-loader": "^6.5.1",
+    "electron": "^16.0.2",
+    "electron-builder": "^22.14.5",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-webpack": "^0.13.2",
+    "eslint-plugin-import": "^2.25.3",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "^2.5.0",
+    "sass": "^1.43.5",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.3",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "electron-log": "^4.4.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "packageManager": "yarn@3.1.0"
+}
