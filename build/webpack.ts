@@ -8,6 +8,7 @@ export class Webpack {
                 if (config.watch) {
                     this.event.emit('update')
                 }
+                if (err) console.error(err)
                 if (err && !config.watch) reject(err)
                 
                 if (!config.watch) resolve(stats)
