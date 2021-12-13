@@ -12,8 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        # os: [macos-latest, windows-latest, ubuntu-latest]
-        os: [windows-latest]
+        os: [macos-latest, windows-latest]
 
     steps:
       - name: Context
@@ -39,34 +38,24 @@ jobs:
 
       ##build
       - name: YARN Build
-        run: yarn webpack
+        run: yarn build
         env:
           MS_APP_ID: ${{ secrets.MS_APP_ID }}
           MS_APP_SECRET: ${{ secrets.MS_APP_SECRET }}
           MS_APP_URL: ${{ secrets.MS_APP_URL }}
           VERSION: '1.0.0'
-      
-      - name: ShowDirectories
-        run: ls -al
 
-      ##ActionRelease - zip
-      # - uses: actions/upload-artifact@v1
-      #   name: Action-Upload-MacOS1
-      #   if: matrix.os == 'macos-latest'
-      #   with:
-      #     name: MacOS Release
-      #     path: '.'
+      #ActionRelease - zip
+      - uses: actions/upload-artifact@v1
+        name: Action-Upload-MacOS1
+        if: matrix.os == 'macos-latest'
+        with:
+          name: MacOS Release
+          path: 'product'
 
-      # - uses: actions/upload-artifact@v1
-      #   name: Action-Upload-Windows1
-      #   if: matrix.os == 'windows-latest'
-      #   with:
-      #     name: Windows Release
-      #     path: '.'
-
-      # - uses: actions/upload-artifact@v1
-      #   name: Action-Upload-Ubuntu1
-      #   if: matrix.os == 'ubuntu-latest'
-      #   with:
-      #     name: Linux Release
-      #     path: '.'
+      - uses: actions/upload-artifact@v1
+        name: Action-Upload-Windows1
+        if: matrix.os == 'windows-latest'
+        with:
+          name: Windows Release
+          path: 'product'
