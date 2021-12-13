@@ -82,6 +82,7 @@ class Main {
             fs.removeSync('./product')
 
         await this.compile()
+        console.log(fs.existsSync(pkg.main))
         console.log('Building...')
         const config: CliOptions = {
             config: {
