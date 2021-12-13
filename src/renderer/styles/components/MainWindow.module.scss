@@ -1,0 +1,62 @@
+@use "../Constants.scss" as *;
+
+.MainWindow {
+  position: relative;
+  width: 100;
+  height: calc(100vh - 100px);
+}
+
+.window {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: -15px 15px 30px #c9c9c9, 15px -15px 30px #ffffff;
+
+  transition: 0.5s;
+}
+
+@mixin side_button {
+  position: absolute;
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  text-align: center;
+  user-select: none;
+
+  display: inline-block;
+
+  font-size: 2rem;
+  color: #4c7b57;
+  background-color: white;
+
+  width: 50px;
+  line-height: 50px;
+  margin: 0;
+
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: -5px 5px 10px #c9c9c9, 5px -5px 10px #ffffff;
+
+  transition: 0.25s;
+
+  &:hover {
+    background: #dddddd;
+    box-shadow: -5px 5px 10px #afafaf, 5px -5px 10px #ffffff;
+  }
+}
+.button-next {
+  @include material-icons;
+  @include side_button;
+  right: -20px;
+}
+.button-back {
+  @include material-icons;
+  @include side_button;
+  left: 30px;
+}

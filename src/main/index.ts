@@ -1,35 +1,71 @@
 import path from 'path'
 import { app, BrowserWindow } from 'electron'
-import log from 'electron-log'
 import { API } from '../api'
+import { Overlay } from '../api/Overlay'
 import { Constants } from './Constants'
+import { AccountManager } from './core/AccountManager'
+import { ConfigurationManager } from './core/ConfigurationManager'
+import { DistributionManager } from './core/DistributionManager'
+import { MinecraftManager } from './core/MinecraftManager'
 import { DevServer } from './dev/server'
 import { Logger } from './util/Logger'
 
 export class MainApp {
-    public static isDev = process.env.NODE_ENV === 'development'
-
-    private readonly API: API
-
     public static run() {
         new MainApp()
     }
+    public static isDev = process.env.NODE_ENV === 'development'
 
-    private _MainWindow?: BrowserWindow
+    //Main process
+    private readonly _AccountManager: AccountManager
+    private readonly _Launcher: MinecraftManager
+
+    public get AccountManager() {
+        return this._AccountManager
+    }
+    public get Launcher() {
+        return this._Launcher
+    }
+
+    //Renderer process
+    private readonly _API: API
+    private readonly _Overlay: Overlay
+
+    public get API() {
+        return this._API
+    }
+    public get Overlay() {
+        return this._Overlay
+    }
+
+    private _MainWindow!: BrowserWindow
     public get MainWindow() {
         return this._MainWindow
     }
 
     constructor() {
-        log.catchErrors()
-        this.API = new API(this)
+        this._AccountManager = new AccountManager()
+        this._Launcher = new MinecraftManager(this)
+
+        this._API = new API(this)
+        this._Overlay = new Overlay(this)
+
+        ConfigurationManager.init()
 
         app.on('ready', () => {
-            this.createWindow()
+            this.init()
         })
 
         process.env.APP_VERSION = app.getVersion()
         process.env.APP_NAME = app.getName()
+        if (MainApp.isDev) {
+            //dev only
+        }
+    }
+
+    private async init() {
+        if (!MainApp.isDev) await DistributionManager.download()
+        this.createWindow()
     }
 
     private createWindow() {

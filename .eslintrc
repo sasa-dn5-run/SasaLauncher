@@ -20,7 +20,10 @@
         "import"
     ],
     "settings": {
-        "import/resolver": "webpack"
+        "import/resolver": "webpack",
+        "import/ignore": [
+            "\\.scss$"
+        ]
     },
     "rules": {
         "import/order": [
@@ -34,7 +37,8 @@
         "import/no-unresolved": 0,
         "@typescript-eslint/no-empty-function": 1,
         "@typescript-eslint/no-var-requires": 1,
-        "@typescript-eslint/no-explicit-any": 0
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/ban-types": 1
     },
     "ignorePatterns": [
         "./lib/**/*.ts",

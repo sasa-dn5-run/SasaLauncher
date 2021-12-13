@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import styles from '../styles/components/frame.module.scss'
+import styles from '../styles/components/Frame.module.scss'
 
 export class Frame extends Component {
+  
   public render() {
     return (
       <div className={styles.frame}>
@@ -25,7 +26,7 @@ export class Frame extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   private close() {

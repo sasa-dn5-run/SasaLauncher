@@ -10,5 +10,10 @@
 #/.pnp.*
 
 /node_modules
+
 /dist
 /product
+
+/.vscode
+/.sasalauncher
+/.env

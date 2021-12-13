@@ -1,0 +1,124 @@
+@use "../../../Constants.scss" as *;
+
+.container {
+  display: inline-block;
+  width: 48%;
+  margin-bottom: 10px;
+  color: white;
+  background-color: $BG_COLOR;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: 0.25s;
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
+    .information {
+      .title {
+        margin: 0;
+      }
+      .version {
+        font-size: 0.8rem;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .description {
+        margin: 0;
+        max-width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    h1 {
+      margin: 0;
+    }
+    .controller {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      user-select: auto;
+      button {
+        @include button($BG_COLOR, white, gray);
+      }
+    }
+  }
+}
+
+.mods {
+  width: 100%;
+  margin-bottom: 10px;
+
+  h2 {
+    font-size: 1.2rem;
+    margin: 10px 0 5px 0;
+  }
+
+  .mod {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    h2 {
+      max-width: 80%;
+      font-size: 0.9rem;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modSwitch {
+      @include ToggleSwitch;
+    }
+
+    .buttons {
+      display: flex;
+      width: 20%;
+      align-items: center;
+      justify-content: space-between;
+      button {
+        p {
+          @include material-icons;
+          margin: 0;
+          font-size: 2rem;
+          color: white;
+          transition: 0.25s;
+          &:hover {
+            color: $BG_COLOR_DARK;
+          }
+        }
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+  .addModButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button {
+      h2{
+        font-size: 0.9rem;
+      }
+      p {
+        @include material-icons;
+        margin: 0;
+        font-size: 2rem;
+        color: white;
+        transition: 0.25s;
+        &:hover {
+          color: $BG_COLOR_DARK;
+        }
+      }
+      background-color: transparent;
+      border: none;
+    }
+  }
+}

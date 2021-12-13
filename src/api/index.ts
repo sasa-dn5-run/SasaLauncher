@@ -1,27 +1,20 @@
 import { MainApp } from '../main'
-import { IpcMainRouter } from './types'
+import { AccountApiInitializer } from './initializer/AccountApiInitializer'
+import { ConfigurationApiInitializer } from './initializer/ConfigurationApiInitializer'
+import { CoreApiInitializer } from './initializer/CoreApiInitializer'
+import { DistributionApiInitializer } from './initializer/DistributionApiInitializer'
+import { MinecraftApiInitializer } from './initializer/MinecraftApiInitializer'
+import { NativeApiInitializer } from './initializer/NativeApiInitializer'
+import { WindowApiInitializer } from './initializer/WindowApiInitializer'
 
 export class API {
-    constructor(private app: MainApp) {
-        this.windowListener()
-    }
-
-    private windowListener() {
-        const router = new IpcMainRouter<Window['api']['window']>('window')
-        router.handle('isMaximized', () => {
-            return this.app.MainWindow?.isMaximized()
-        })
-        router.on('maximize', () => {
-            this.app.MainWindow?.maximize()
-        })
-        router.on('unmaximize', () => {
-            this.app.MainWindow?.unmaximize()
-        })
-        router.on('minimize', () => {
-            this.app.MainWindow?.minimize()
-        })
-        router.on('close', () => {
-            this.app.MainWindow?.close()
-        })
+    constructor(app: MainApp) {
+        new CoreApiInitializer(app)
+        new WindowApiInitializer(app)
+        new NativeApiInitializer(app)
+        new DistributionApiInitializer(app)
+        new ConfigurationApiInitializer(app)
+        new AccountApiInitializer(app)
+        new MinecraftApiInitializer(app)
     }
 }

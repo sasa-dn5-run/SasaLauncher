@@ -1,0 +1,52 @@
+@use "../Constants.scss" as *;
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-family: $DefaultFont;
+  .wrapper {
+    padding: 25px;
+    border-radius: 5px;
+    min-width: 275px;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+  progress {
+    width: 500px;
+    -webkit-appearance: none;
+    &::-webkit-progress-bar {
+      background-color: $BG_COLOR_DARK;
+      border-radius: 5px;
+    }
+    &::-webkit-progress-value {
+      background-color: $BG_COLOR;
+      border-radius: 5px;
+    }
+  }
+  button {
+    display: inline-block;
+    border-radius: 10px;
+    margin: 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 0.25s;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    p {
+      font-family: $DefaultFont;
+      font-size: 1.25rem;
+      margin: 5px;
+      color: white;
+    }
+  }
+}

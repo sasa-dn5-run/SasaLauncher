@@ -1,0 +1,18 @@
+@use "../../Constants.scss" as *;
+
+.container {
+  text-align: center;
+  color: $BG_COLOR;
+  .inputSpace {
+    @include inputSpace;
+    display: inline-block;
+    width: 50%;
+    button{
+      @include button(white, $BG_COLOR, $BG_COLOR_DARK);
+    }
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin-top: 50px;
+  }
+}

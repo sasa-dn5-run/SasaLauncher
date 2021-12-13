@@ -1,0 +1,16 @@
+.container {
+  color: #4c7b57;
+  .title{
+    margin-left: 10px;
+  }
+  .servers {
+    display: flex;
+    margin: 10px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 20px;
+
+    height: 80%;
+    overflow-y: scroll;
+  }
+}

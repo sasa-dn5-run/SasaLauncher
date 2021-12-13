@@ -1,0 +1,19 @@
+@use "../../Constants.scss" as *;
+
+.container {
+  color: #4c7b57;
+  text-align: center;
+  .inputSpace {
+    @include inputSpace;
+    display: inline-block;
+    width: 70%;
+    button{
+      @include button(white, $BG_COLOR, $BG_COLOR_DARK);
+    }
+    .input {
+      input[type=text] {
+        width: 50%;
+      }
+    }
+  }
+}

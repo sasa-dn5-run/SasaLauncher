@@ -1,0 +1,16 @@
+@use "../Constants.scss" as *;
+
+.container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  .number {
+    width: 20%;
+    font-family: $DefaultFont;
+    border: #325239 solid 2px;
+  }
+  .range {
+    @include slideBar;
+    width: 70%;
+  }
+}

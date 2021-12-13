@@ -126,7 +126,8 @@ class Main {
                     './dist/**/*',
                     './node_modules/**/*'
                 ],
-                asar: true
+                asar: true,
+                icon: './icon/icon.png'
             },
             publish: 'never'
         }

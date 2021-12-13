@@ -1,0 +1,18 @@
+.debug {
+  text-align: center;
+  .log {
+    display: inline-block;
+    text-align: left;
+    margin: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 90%;
+    height: 75%;
+    p {
+      user-select: text;
+      font-size: 0.8rem;
+      margin: 0;
+      margin-bottom: 5px;
+    }
+  }
+}

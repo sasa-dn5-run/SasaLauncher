@@ -1,6 +1,7 @@
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { Configuration } from 'webpack'
+require('dotenv').config()
 
 const renderer: Configuration = {
     name: 'renderer',
@@ -48,7 +49,7 @@ const renderer: Configuration = {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
     target: 'web',
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
 }
 
 const main: Configuration = {
@@ -72,6 +73,26 @@ const main: Configuration = {
                 loader: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.ts$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        {
+                            search: /\${{MS_APP_ID}}/g,
+                            replace: process.env.MS_APP_ID,
+                        },
+                        {
+                            search: /\${{MS_APP_SECRET}}/g,
+                            replace: process.env.MS_APP_SECRET,
+                        },
+                        {
+                            search: /\${{MS_APP_URL}}/g,
+                            replace: process.env.MS_APP_URL,
+                        }
+                    ]
+                }
+            }
         ],
     },
     plugins: [],
@@ -79,7 +100,7 @@ const main: Configuration = {
         extensions: ['.ts', '.tsx', '.js', 'jsx'],
     },
     target: 'electron-main',
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
 }
 
 export default [renderer, main]

@@ -1,0 +1,60 @@
+@use "../Constants.scss" as *;
+
+.header {
+  user-select: none;
+  background-color: $BG_COLOR;
+  height: 100px;
+  .body {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .right {
+      .title {
+        font-size: 3rem;
+        color: white;
+        margin: 0;
+        margin-left: 30px;
+      }
+    }
+    .left {
+      display: flex;
+      align-items: center;
+      .update {
+        display: flex;
+        align-items: center;
+        margin-right: 50px;
+        .update-info {
+          display: inline-block;
+          color: white;
+          margin-right: 10px;
+        }
+        .update-button {
+          @include material-icons;
+          margin: 0;
+          font-size: 2rem;
+          display: inline-block;
+          color: white;
+          transition: 0.25s;
+          &:hover {
+            color: rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
+      .account {
+        display: inline-block;
+        div {
+          display: flex;
+          align-items: center;
+          color: white;
+          img {
+            border-radius: 5px;
+            margin-left: 10px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}

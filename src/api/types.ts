@@ -1,5 +1,5 @@
 import { ipcMain, IpcMainEvent, IpcMainInvokeEvent, ipcRenderer, IpcRendererEvent } from 'electron'
-import { callbacks } from '../@types/api'
+import { callbacks } from '../@types/_Api'
 
 export class RendererHandler<M extends callbacks> {
     constructor(private key: string) {}
