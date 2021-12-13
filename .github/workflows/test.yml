@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         # os: [macos-latest, windows-latest, ubuntu-latest]
-        os: [ubuntu-latest]
+        os: [windows-latest]
 
     steps:
       - name: Context
@@ -38,7 +38,7 @@ jobs:
 
       ##build
       - name: YARN Build
-        run: yarn compile
+        run: yarn build
         env:
           MS_APP_ID: ${{ secrets.MS_APP_ID }}
           MS_APP_SECRET: ${{ secrets.MS_APP_SECRET }}
@@ -60,9 +60,9 @@ jobs:
       #     name: Windows Release
       #     path: '.'
 
-      - uses: actions/upload-artifact@v1
-        name: Action-Upload-Ubuntu1
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          name: Linux Release
-          path: '.'
+      # - uses: actions/upload-artifact@v1
+      #   name: Action-Upload-Ubuntu1
+      #   if: matrix.os == 'ubuntu-latest'
+      #   with:
+      #     name: Linux Release
+      #     path: '.'
