@@ -248,6 +248,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/adm-zip@npm:^0.4.34":
+  version: 0.4.34
+  resolution: "@types/adm-zip@npm:0.4.34"
+  dependencies:
+    "@types/node": "*"
+  checksum: dc9dfda261c7fa898185c6d73e89c4a2f6db1faa0d47cd14ce8fadf882078a7b8de8d953dac2bba321bcdde2059da67daacfdfb878ca459d317f32de36b0be6d
+  languageName: node
+  linkType: hard
+
 "@types/date-utils@npm:^1.2.1":
   version: 1.2.1
   resolution: "@types/date-utils@npm:1.2.1"
@@ -790,6 +799,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "SasaLauncher@workspace:."
   dependencies:
+    "@types/adm-zip": ^0.4.34
     "@types/date-utils": ^1.2.1
     "@types/fs-extra": ^9.0.13
     "@types/node": ^16.11.10
@@ -800,7 +810,9 @@ __metadata:
     "@types/unzipper": ^0.10.4
     "@typescript-eslint/eslint-plugin": ^5.4.0
     "@typescript-eslint/parser": ^5.4.0
+    adm-zip: ^0.5.9
     classnames: ^2.3.1
+    crypto: ^1.0.1
     css-loader: ^6.5.1
     date-utils: ^1.2.21
     dotenv: ^10.0.0
@@ -830,6 +842,7 @@ __metadata:
     unzipper: ^0.10.11
     webpack: ^5.64.3
     webpack-cli: ^4.9.1
+    yaml: ^1.10.2
   languageName: unknown
   linkType: soft
 
@@ -878,6 +891,13 @@ __metadata:
   version: 0.4.16
   resolution: "adm-zip@npm:0.4.16"
   checksum: 5ea46664d8b3b073fffeb7f934705fea288708745e708cffc1dd732ce3d2672cecd476b243f9d051892fd12952db2b6bd061975e1ff40057246f6d0cb6534a50
+  languageName: node
+  linkType: hard
+
+"adm-zip@npm:^0.5.9":
+  version: 0.5.9
+  resolution: "adm-zip@npm:0.5.9"
+  checksum: 4909bc04119fdd5e8f8ba43826e50623e5c427cf0a939c809d4f9456a6a03c6aa0544e82088739de9ba16b7649f71b99ccbbddc7b2c38bd6143f9c4726cc7ed9
   languageName: node
   linkType: hard
 
@@ -1903,6 +1923,13 @@ __metadata:
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
   checksum: 0283879f55e7c16fdceacc181f87a0a65c53bc16ffe1d58b9d19a6277adcd71900d02bb2c4843dd55e78c51e30e89b0fec618a7f170ebcc95b33182c28f05fd6
+  languageName: node
+  linkType: hard
+
+"crypto@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "crypto@npm:1.0.1"
+  checksum: 087fe3165bd94c333a49e6ed66a0193911f63eac38a24f379b3001a5fe260a59c413646e53a0f67875ba13902b2686d81dc703cb2c147a4ec727dcdc04e5645e
   languageName: node
   linkType: hard
 
@@ -6712,6 +6739,13 @@ __metadata:
   version: 4.0.0
   resolution: "yallist@npm:4.0.0"
   checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^1.10.2":
+  version: 1.10.2
+  resolution: "yaml@npm:1.10.2"
+  checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
   languageName: node
   linkType: hard
 

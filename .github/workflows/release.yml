@@ -23,12 +23,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.get_version.outputs.version }}
-          release_name: SasaLauncher2 - ${{ steps.get_version.outputs.version }}
-          body: |
-            ### Download
-            [Windows](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.exe)
-            [Mac OS X](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.dmg)
-            [Linux](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage)
+          release_name: SasaLauncher - ${{ steps.get_version.outputs.version }}
+          body: 'Release of SasaLauncher - ${{ steps.get_version.outputs.version }}'
           draft: false
           prerelease: false
 
@@ -41,7 +37,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, windows-latest]
 
     steps:
       - name: Context
@@ -72,7 +68,7 @@ jobs:
 
       ##build
       - name: YARN Build
-        run: yarn build
+        run: yarn publish
         env:
           MS_APP_ID: ${{ secrets.MS_APP_ID }}
           MS_APP_SECRET: ${{ secrets.MS_APP_SECRET }}
@@ -94,18 +90,11 @@ jobs:
           name: Windows Release
           path: product
 
-      - uses: actions/upload-artifact@v1
-        name: Action-Upload-Ubuntu1
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          name: Linux Release
-          path: product
-
       - uses: AButler/upload-release-assets@v2.0
         name: Upload Release File - MacOS1
         if: matrix.os == 'macos-latest'
         with:
-          files: product/latest-mac.yml;product/SasaLauncher2-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
+          files: product/latest-mac.yml;product/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -113,14 +102,6 @@ jobs:
         name: Upload Release File - Windows1
         if: matrix.os == 'windows-latest'
         with:
-          files: product/latest.yml;product/SasaLauncher2-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-tag: ${{ steps.get_version.outputs.version }}
-
-      - uses: AButler/upload-release-assets@v2.0
-        name: Upload Release File - Ubuntu1
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          files: product/latest-linux.yml;product/SasaLauncher2-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
+          files: product/latest.yml;product/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}

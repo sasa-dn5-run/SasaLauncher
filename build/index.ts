@@ -1,7 +1,10 @@
+import crypto from 'crypto'
 import http from 'http'
 import path from 'path'
-import { build, CliOptions } from "electron-builder"
+import Zip from 'adm-zip'
+import { build, CliOptions } from 'electron-builder'
 import fs from 'fs-extra'
+import yaml from 'yaml'
 import webpackConfig from '../webpack.config'
 import { Yarn } from './Yarn'
 import { Webpack } from './webpack'
@@ -9,6 +12,8 @@ import { Webpack } from './webpack'
 const pkg = fs.readJsonSync(path.join(__dirname, '..', 'package.json'))
 
 class Main {
+    private static readonly version = !!process.env.VERSION && (process.env.VERSION as string).split('.').length === 3 ? (process.env.VERSION as string) : '1.0.0'
+
     private static readonly extraOptions: string[] = []
     private static mode: 'development' | 'production' | 'none'
     public static async run(args: string[]) {
@@ -29,9 +34,14 @@ class Main {
                 await this.compile()
                 break
             }
-            case 'build':{
+            case 'build': {
                 this.mode = 'production'
                 await this.build()
+                break
+            }
+            case 'publish': {
+                this.mode = 'production'
+                await this.publish()
                 break
             }
         }
@@ -59,16 +69,25 @@ class Main {
                         hostname: 'localhost',
                         port: process.env.DEV_PORT ?? 8080,
                     })
-                    req.on('error', () => {/*ignore*/})
+                    req.on('error', () => {
+                        /*ignore*/
+                    })
                     req.end()
                 })
             }),
         ])
     }
 
+    private static rewriteVersion() {
+        console.log(`Rewriting version... ${this.version}`)
+        const version = this.version
+        const json = fs.readJSONSync('./package.json')
+        json.version = version
+        fs.writeJSONSync('./package.json', json, { spaces: 4 })
+    }
     private static async compile() {
         console.log('Compiling...')
-        if(this.extraOptions.includes("--clean") && fs.existsSync('./dist')) fs.removeSync('./dist')
+        if (this.extraOptions.includes('--clean') && fs.existsSync('./dist')) fs.removeSync('./dist')
         const tasks = []
         for (const config of webpackConfig) {
             config.mode = this.mode
@@ -77,9 +96,8 @@ class Main {
         await Promise.all(tasks)
     }
 
-    private static async build(){
-        if ((this.extraOptions.includes("--clean") || this.extraOptions.includes("--full")) && fs.existsSync('./product'))
-            fs.removeSync('./product')
+    private static async build() {
+        if ((this.extraOptions.includes('--clean') || this.extraOptions.includes('--full')) && fs.existsSync('./product')) fs.removeSync('./product')
 
         await this.compile()
         console.log('Building...')
@@ -91,47 +109,62 @@ class Main {
                 copyright: `Copyright © 2021 ${pkg.author}`,
                 directories: {
                     buildResources: './build',
-                    output: './product'
+                    output: './product',
                 },
                 extraMetadata: {
-                    main: pkg.main
+                    main: pkg.main,
                 },
                 win: {
                     target: [
                         {
                             target: 'nsis',
-                            arch: 'x64'
-                        }
-                    ]
+                            arch: 'x64',
+                        },
+                    ],
                 },
                 nsis: {
                     oneClick: false,
                     perMachine: false,
                     allowElevation: true,
-                    allowToChangeInstallationDirectory: true
+                    allowToChangeInstallationDirectory: true,
                 },
                 mac: {
                     target: 'dmg',
-                    category: 'public.app-category.games'
+                    category: 'public.app-category.games',
                 },
                 linux: {
                     target: 'AppImage',
                     maintainer: pkg.author,
                     vendor: pkg.author,
                     description: pkg.description,
-                    category: 'Game'
+                    category: 'Game',
                 },
                 compression: 'maximum',
-                files: [
-                    './dist/**/*',
-                    './node_modules/**/*'
-                ],
+                files: ['./dist/**/*', './node_modules/**/*'],
                 asar: true,
-                icon: './icon/icon.png'
+                icon: './icon/icon.png',
             },
-            publish: 'never'
+            publish: 'never',
         }
         await build(config)
+    }
+
+    private static async publish() {
+        this.rewriteVersion()
+        await this.build()
+        const unpackPath = process.platform === 'win32' ? './product/win-unpacked' : './product/mac'
+        const zip = new Zip()
+        zip.addLocalFolder(unpackPath)
+        zip.writeZip(`./product/${pkg.name}-setup-${this.version}.zip`)
+
+        const md5 = crypto.createHash('sha256').update(zip.toBuffer()).digest('hex')
+
+        const yml = yaml.parse(fs.readFileSync('./product/latest.yml', 'utf8'))
+        yml.zip = {
+            sha256: md5,
+            size: zip.toBuffer().length
+        }
+        fs.writeFileSync('./product/latest.yml', yaml.stringify(yml))
     }
 }
 Main.run(process.argv.slice(2))
