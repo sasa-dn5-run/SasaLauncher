@@ -152,19 +152,22 @@ class Main {
     private static async publish() {
         this.rewriteVersion()
         await this.build()
+
         const unpackPath = process.platform === 'win32' ? './product/win-unpacked' : './product/mac'
+        const yamlPath = process.platform === 'win32' ? './product/latest.yml' : './product/latest-mac.yml'
+
         const zip = new Zip()
         zip.addLocalFolder(unpackPath)
         zip.writeZip(`./product/${pkg.name}-setup-${this.version}.zip`)
 
         const md5 = crypto.createHash('sha256').update(zip.toBuffer()).digest('hex')
 
-        const yml = yaml.parse(fs.readFileSync('./product/latest.yml', 'utf8'))
+        const yml = yaml.parse(fs.readFileSync(yamlPath, 'utf8'))
         yml.zip = {
             sha256: md5,
             size: zip.toBuffer().length
         }
-        fs.writeFileSync('./product/latest.yml', yaml.stringify(yml))
+        fs.writeFileSync(yamlPath, yaml.stringify(yml))
     }
 }
 Main.run(process.argv.slice(2))
