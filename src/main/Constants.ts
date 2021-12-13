@@ -8,7 +8,7 @@ export class Constants {
     public static readonly APP_VERSION = app.getVersion()
     public static readonly APP_PATH = path.join(__dirname, 'app')
 
-    public static readonly MAIN_URL = path.join(Constants.APP_PATH, 'assets', 'index.html')
+    public static readonly MAIN_URL = path.join(Constants.APP_PATH, 'index.html')
 
     public static readonly PACK_URL = 'https://raw.githubusercontent.com/sasadd-LAB/SasaPacks2/master'
     public static readonly PACK_URL_DEV = 'https://raw.githubusercontent.com/sasadd-LAB/SasaPacks2/dev'

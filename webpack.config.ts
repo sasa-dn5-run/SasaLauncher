@@ -10,7 +10,7 @@ const renderer: Configuration = {
     },
     entry: ['./src/renderer/index.tsx'],
     output: {
-        path: path.resolve(__dirname, 'dist', 'app', 'assets'),
+        path: path.resolve(__dirname, 'dist', 'app'),
         publicPath: './',
         filename: '[name].js',
         assetModuleFilename: 'assets/[name][ext]',
