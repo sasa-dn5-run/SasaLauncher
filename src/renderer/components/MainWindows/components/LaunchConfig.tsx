@@ -24,7 +24,7 @@ export class LaunchConfig extends Component<
   constructor(p: Props) {
     super(p)
     this.state = {
-      maxHeight: '150px',
+      maxHeight: '175px',
       mods: [],
     }
     this.ref = React.createRef()
@@ -32,7 +32,7 @@ export class LaunchConfig extends Component<
   }
 
   public componentDidMount() {
-    this.height = this.ref.current?.scrollHeight ?? 1000
+    this.height = (this.ref.current?.scrollHeight ?? 0) + 0
   }
 
   private async init() {
@@ -40,14 +40,15 @@ export class LaunchConfig extends Component<
     this.setState({
       mods: mods,
     })
-    this.height = this.ref.current?.scrollHeight ?? 1000
+    this.height = (this.ref.current?.scrollHeight ?? 0) + 0
   }
 
   private changeHeight() {
     this.setState({
-      maxHeight: this.state.maxHeight === '150px' ? `${this.height}px` : '150px',
+      maxHeight: this.state.maxHeight === '175px' ? `${this.height}px` : '175px',
     })
   }
+
   private launch() {
     const disabledMods = []
     for (const v of Object.keys(this.mods)) {
@@ -57,6 +58,7 @@ export class LaunchConfig extends Component<
     }
     window.api.minecraft.launch(this.props.option.id, disabledMods)
   }
+
   private async addAdditionalMod() {
     const data = await window.api.native.showOpenDialog({
       title: '追加するModを選択',
@@ -69,6 +71,7 @@ export class LaunchConfig extends Component<
       maxHeight: `${this.height}px`,
     })
   }
+
   private async removeAdditionalMod(mod: Mod) {
     const confirm = await GlobalController.Overlay.question('Modを削除します。よろしいですか？')
     if (!confirm) return
@@ -76,10 +79,15 @@ export class LaunchConfig extends Component<
     this.init()
   }
 
+
+
   private buildMods() {
     const mods = this.state.mods
     return (
       <>
+        {/** 
+         * Required Mods list
+         */}
         <div className={style.mods}>
           {mods.filter((v) => v.level === 'require').length > 0 && <h2>Required Mods</h2>}
           {mods
@@ -93,6 +101,9 @@ export class LaunchConfig extends Component<
               )
             })}
         </div>
+        {/** 
+         * Optional Mods list
+         */}
         <div className={style.mods}>
           {mods.filter((v) => v.level !== 'require' && v.level !== 'additional').length > 0 && <h2>Optional Mods</h2>}
           {mods
@@ -116,6 +127,9 @@ export class LaunchConfig extends Component<
               )
             })}
         </div>
+        {/** 
+         * Additional Mods list
+         */}
         <div className={style.mods}>
           {mods.filter((v) => v.level === 'additional').length > 0 && <h2>Additional Mods</h2>}
           {mods
