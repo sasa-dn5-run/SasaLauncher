@@ -455,6 +455,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:^7.3.6":
+  version: 7.3.9
+  resolution: "@types/semver@npm:7.3.9"
+  checksum: 60bfcfdfa7f937be2c6f4b37ddb6714fb0f27b05fe4cbdfdd596a97d35ed95d13ee410efdd88e72a66449d0384220bf20055ab7d6b5df10de4990fbd20e5cbe0
+  languageName: node
+  linkType: hard
+
 "@types/tar@npm:^6.1.1":
   version: 6.1.1
   resolution: "@types/tar@npm:6.1.1"
@@ -812,6 +819,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.4.0
     adm-zip: ^0.5.9
     classnames: ^2.3.1
+    cross-env: ^7.0.3
     crypto: ^1.0.1
     css-loader: ^6.5.1
     date-utils: ^1.2.21
@@ -819,6 +827,7 @@ __metadata:
     electron: ^16.0.2
     electron-builder: ^22.14.5
     electron-log: ^4.4.1
+    electron-updater: ^4.6.1
     eslint: ^8.3.0
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-webpack: ^0.13.2
@@ -1908,6 +1917,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-env@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: ^7.0.1
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -2375,6 +2396,22 @@ __metadata:
   version: 1.4.1
   resolution: "electron-to-chromium@npm:1.4.1"
   checksum: cd2e5dad2c377d41859501bc39f131a5104fb87a130ba209a57ae3c2bddca0c882067e91c35a7ee77d71481867576d9e68dc8a5a11d6327b5d29c6ea8b94246e
+  languageName: node
+  linkType: hard
+
+"electron-updater@npm:^4.6.1":
+  version: 4.6.5
+  resolution: "electron-updater@npm:4.6.5"
+  dependencies:
+    "@types/semver": ^7.3.6
+    builder-util-runtime: 8.9.2
+    fs-extra: ^10.0.0
+    js-yaml: ^4.1.0
+    lazy-val: ^1.0.5
+    lodash.escaperegexp: ^4.1.2
+    lodash.isequal: ^4.5.0
+    semver: ^7.3.5
+  checksum: 06b34490fa6213f5c6a01de6f7b3d96eba4e1b7d27e8346747d8b094b9591684f55f92c703e2ee3407c562a240518c0eede699462cc333fcfe2983141941fe98
   languageName: node
   linkType: hard
 
@@ -4222,6 +4259,20 @@ __metadata:
   dependencies:
     p-locate: ^4.1.0
   checksum: 83e51725e67517287d73e1ded92b28602e3ae5580b301fe54bfb76c0c723e3f285b19252e375712316774cf52006cb236aed5704692c32db0d5d089b69696e30
+  languageName: node
+  linkType: hard
+
+"lodash.escaperegexp@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.escaperegexp@npm:4.1.2"
+  checksum: 6d99452b1cfd6073175a9b741a9b09ece159eac463f86f02ea3bee2e2092923fce812c8d2bf446309cc52d1d61bf9af51c8118b0d7421388e6cead7bd3798f0f
+  languageName: node
+  linkType: hard
+
+"lodash.isequal@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.isequal@npm:4.5.0"
+  checksum: da27515dc5230eb1140ba65ff8de3613649620e8656b19a6270afe4866b7bd461d9ba2ac8a48dcc57f7adac4ee80e1de9f965d89d4d81a0ad52bb3eec2609644
   languageName: node
   linkType: hard
 

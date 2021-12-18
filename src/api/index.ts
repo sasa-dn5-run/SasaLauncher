@@ -5,11 +5,13 @@ import { CoreApiInitializer } from './initializer/CoreApiInitializer'
 import { DistributionApiInitializer } from './initializer/DistributionApiInitializer'
 import { MinecraftApiInitializer } from './initializer/MinecraftApiInitializer'
 import { NativeApiInitializer } from './initializer/NativeApiInitializer'
+import { UpdaterApiInitializer } from './initializer/UpdaterApiInitializer'
 import { WindowApiInitializer } from './initializer/WindowApiInitializer'
 
 export class API {
     constructor(app: MainApp) {
         new CoreApiInitializer(app)
+        new UpdaterApiInitializer(app)
         new WindowApiInitializer(app)
         new NativeApiInitializer(app)
         new DistributionApiInitializer(app)

@@ -22,9 +22,7 @@ type Events = {
     close: number
 }
 
-export class SasaClient extends (EventEmitter as {
-    new (): StrictEventEmitter<EventEmitter, Events>
-}) {
+export class SasaClient extends (EventEmitter as new () => StrictEventEmitter<EventEmitter, Events>) {
     private _Client: Client
     private _Option: ServerOption
     private _JavaManger: JavaManager

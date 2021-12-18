@@ -30,9 +30,7 @@ enum JavaURL {
     WIN32_JAVA_17 = 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.1%2B12/OpenJDK17U-jdk_x64_windows_hotspot_17.0.1_12.zip',
 }
 
-export class JavaManager extends (EventEmitter as {
-    new (): StrictEventEmitter<EventEmitter, Events>
-}) {
+export class JavaManager extends (EventEmitter as new () => StrictEventEmitter<EventEmitter, Events>) {
     private get(version: JavaVersion) {
         let java: string | undefined
         const dir = path.join(Constants.DATA_PATH, 'java')

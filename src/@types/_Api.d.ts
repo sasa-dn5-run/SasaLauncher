@@ -5,6 +5,7 @@ import { Account } from './Account'
 import { Configuration } from './Configuration'
 import { Distribution, Mod } from './Distribution'
 import { LauncherErrorType } from './ErrorConstants'
+import { UpdateCheckResult } from 'electron-updater'
 
 interface callbacks {
     [key: string]: (...args: any) => void
@@ -18,6 +19,7 @@ type ApiResponse = {
 
 type API = {
     on: typeof ipcRenderer.on
+    send: typeof ipcRenderer.send
     app: {
         name: string
         version: string

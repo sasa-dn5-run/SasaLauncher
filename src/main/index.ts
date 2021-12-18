@@ -9,6 +9,7 @@ import { DistributionManager } from './core/DistributionManager'
 import { MinecraftManager } from './core/MinecraftManager'
 import { DevServer } from './dev/server'
 import { Logger } from './util/Logger'
+import { autoUpdater } from 'electron-updater'
 
 export class MainApp {
     public static run() {
@@ -65,6 +66,8 @@ export class MainApp {
 
     private async init() {
         if (!MainApp.isDev) await DistributionManager.download()
+        if(process.platform === 'darwin') autoUpdater.autoDownload = false
+        autoUpdater.logger = Logger.get()
         this.createWindow()
     }
 

@@ -7,6 +7,8 @@ export class Variable {
     public static accounts: Account[]
     public static configuration: Configuration
 
+    public static updating = false
+
     public static async init() {
         Variable.distribution = await window.api.distribution.get()
         Variable.accounts = await window.api.account.getAccounts()

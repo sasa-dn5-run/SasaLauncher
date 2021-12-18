@@ -94,7 +94,7 @@ jobs:
         name: Upload Release File - MacOS1
         if: matrix.os == 'macos-latest'
         with:
-          files: product/latest-mac.yml;product/SasaLauncher-macos-${{ steps.get_version.outputs.version-without-v }}.zip
+          files: product/latest-mac.yml;product/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -102,6 +102,6 @@ jobs:
         name: Upload Release File - Windows1
         if: matrix.os == 'windows-latest'
         with:
-          files: product/latest.yml;product/SasaLauncher-windows-${{ steps.get_version.outputs.version-without-v }}.zip
+          files: product/latest.yml;product/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}

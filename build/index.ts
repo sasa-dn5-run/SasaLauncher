@@ -1,10 +1,7 @@
-import crypto from 'crypto'
 import http from 'http'
 import path from 'path'
-import Zip from 'adm-zip'
 import { build, CliOptions } from 'electron-builder'
 import fs from 'fs-extra'
-import yaml from 'yaml'
 import webpackConfig from '../webpack.config'
 import { Yarn } from './Yarn'
 import { Webpack } from './webpack'
@@ -152,22 +149,6 @@ class Main {
     private static async publish() {
         this.rewriteVersion()
         await this.build()
-
-        const unpackPath = process.platform === 'win32' ? './product/win-unpacked' : './product/mac'
-        const yamlPath = process.platform === 'win32' ? './product/latest.yml' : './product/latest-mac.yml'
-        const fileName = `${pkg.name}-${process.platform === 'win32' ? 'windows' : 'macos'}-${this.version}.zip`
-
-        const zip = new Zip()
-        zip.addLocalFolder(unpackPath)
-        zip.writeZip(`./product/${fileName}`)
-
-        const yml = yaml.parse(fs.readFileSync(yamlPath, 'utf8'))
-        yml.zip = {
-            url: fileName,
-            sha256: crypto.createHash('sha256').update(zip.toBuffer()).digest('hex'),
-            size: zip.toBuffer().length
-        }
-        fs.writeFileSync(yamlPath, yaml.stringify(yml))
     }
 }
 Main.run(process.argv.slice(2))

@@ -50,6 +50,7 @@ export class Overlay extends Component<
   private initHanlder() {
     GlobalController.Overlay.close = this.close.bind(this)
     GlobalController.Overlay.show = this.show.bind(this)
+    GlobalController.Overlay.change = this.change.bind(this)
     GlobalController.Overlay.error = this.error.bind(this)
     GlobalController.Overlay.question = this.question.bind(this)
     GlobalController.Overlay.progress = this.progress.bind(this)
@@ -95,6 +96,12 @@ export class Overlay extends Component<
         }
       }
       this.showing = true
+    })
+  }
+  private change(msg: string, mode: OverlayMode = 'normal') {
+    this.setState({
+      msg: msg,
+      mode: mode,
     })
   }
   private async error(error: LauncherErrorType) {

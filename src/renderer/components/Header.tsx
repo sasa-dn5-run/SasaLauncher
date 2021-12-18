@@ -3,11 +3,13 @@ import { Account } from '../../@types/Account'
 import { Variable } from '../Variable'
 import style from '../styles/components/Header.module.scss'
 import { LineJoint } from './LineJoint'
+import { GlobalController } from '../OverlayController'
 
 export class Header extends Component<
   {},
   {
     account: Account
+    hasUpdate: boolean
   }
 > {
   
@@ -15,12 +17,20 @@ export class Header extends Component<
     super(props)
     this.state = {
       account: Variable.accounts.find((v) => v.selected) || Variable.accounts[0],
+      hasUpdate: false
     }
     window.util.events.on('variable:init', () => {
       this.setState({
         account: Variable.accounts.find((v) => v.selected) || Variable.accounts[0],
       })
     })
+  }
+
+  private async checkUpdate(){
+    if (Variable.updating) return
+    Variable.updating = true
+    GlobalController.Overlay.show('アップデートを確認中...')
+    window.api.send('updater', 'check')
   }
 
   public render() {
@@ -32,14 +42,12 @@ export class Header extends Component<
           </div>
           <div className={style.left}>
             <div className={style['update']}>
-              <p className={style['update-info']} id="UpdateNoticeParagraph" style={{ opacity: 0 }}>
+              <p className={style['update-info']} id="UpdateNoticeParagraph" style={{ opacity: this.state.hasUpdate ? 1 : 0 }}>
                 アップデートがあります→
               </p>
               <p
                 className={style['update-button']}
-                onClick={() => {
-                  /* checkUpdate() */
-                }}
+                onClick={this.checkUpdate.bind(this)}
               >
                 system_update_alt
               </p>

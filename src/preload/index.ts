@@ -2,8 +2,8 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { EventEmitter } from 'events'
 import { RendererHandler } from '../api/types'
 
-const window = new RendererHandler<Window['api']['window']>('window')
 const native = new RendererHandler<Window['api']['native']>('native')
+const window = new RendererHandler<Window['api']['window']>('window')
 const distribution = new RendererHandler<Window['api']['distribution']>('distribution')
 const account = new RendererHandler<Window['api']['account']>('auth')
 const configuration = new RendererHandler<Window['api']['configuration']>('configuration')
@@ -13,6 +13,7 @@ const events = new EventEmitter()
 
 const api: Window['api'] = {
     on: ipcRenderer.on.bind(ipcRenderer),
+    send: ipcRenderer.send.bind(ipcRenderer),
     app: {
         name: process.env.APP_NAME ?? '',
         version: process.env.APP_VERSION ?? '',
