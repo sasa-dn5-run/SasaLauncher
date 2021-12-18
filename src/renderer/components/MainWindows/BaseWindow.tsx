@@ -13,7 +13,6 @@ export class BaseWindow extends Component<
     data?: any
   }
 > {
-
   public static readonly id: string
 
   private _id: string

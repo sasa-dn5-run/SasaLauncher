@@ -20,7 +20,7 @@ export class AccountManager {
 
     constructor() {
         const file = path.join(Constants.DATA_PATH, 'accounts.json')
-        if(!fs.existsSync(file)) fs.writeJSONSync(file, [])
+        if (!fs.existsSync(file)) fs.writeJSONSync(file, [])
         this._Accounts = fs.readJSONSync(path.join(Constants.DATA_PATH, 'accounts.json'))
         this.currentAccount = this._Accounts.find((v) => v.selected)
         MicrosoftAuth.setup(Constants.MS_APP_ID, Constants.MS_APP_SECRET, Constants.MS_APP_URL)

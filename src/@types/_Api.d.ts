@@ -5,7 +5,6 @@ import { Account } from './Account'
 import { Configuration } from './Configuration'
 import { Distribution, Mod } from './Distribution'
 import { LauncherErrorType } from './ErrorConstants'
-import { UpdateCheckResult } from 'electron-updater'
 
 interface callbacks {
     [key: string]: (...args: any) => void
@@ -39,9 +38,9 @@ type API = {
     }
     account: {
         getAccounts: () => Promise<Account[]>
-        login: (type: AuthType, email?: string, password?: string) => Promise<ApiResponse>
-        logout: (account: Account) => Promise<ApiResponse>
-        select: (account: Account) => Promise<ApiResponse>
+        login: (type: AuthType, email?: string, password?: string) => Promise<void>
+        logout: (account: Account) => Promise<void>
+        select: (account: Account) => Promise<void>
     }
     configuration: {
         get: () => Promise<Configuration>

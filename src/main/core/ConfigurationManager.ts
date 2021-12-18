@@ -17,12 +17,15 @@ export class ConfigurationManager {
     }
     public static init() {
         this.checkVersion()
-        const config: Configuration = {
-            MinecraftDataFolder: path.join(Constants.DATA_PATH, 'servers'),
-            Xmx: '4G',
-            Xms: '4G',
+        const configPath = path.join(Constants.DATA_PATH, 'config.json')
+        if(!fs.existsSync(configPath)) {
+            const config: Configuration = {
+                MinecraftDataFolder: path.join(Constants.DATA_PATH, 'servers'),
+                Xmx: '4G',
+                Xms: '4G',
+            }
+            fs.writeJSONSync(path.join(Constants.DATA_PATH, 'config.json'), config, { spaces: 4 })
         }
-        fs.writeJSONSync(path.join(Constants.DATA_PATH, 'config.json'), config, { spaces: 4 })
     }
     public static getConfig(): Configuration {
         return fs.readJSONSync(path.join(Constants.DATA_PATH, 'config.json'))

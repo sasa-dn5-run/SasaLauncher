@@ -7,7 +7,6 @@ import { InputWithRange } from '../InputWithRange'
 import { BaseWindow, Props } from './BaseWindow'
 
 export class Setting extends BaseWindow {
-
   public static readonly id = 'setting'
 
   private readonly config = {

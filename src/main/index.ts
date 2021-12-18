@@ -1,5 +1,6 @@
 import path from 'path'
 import { app, BrowserWindow } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import { API } from '../api'
 import { Overlay } from '../api/Overlay'
 import { Constants } from './Constants'
@@ -9,13 +10,12 @@ import { DistributionManager } from './core/DistributionManager'
 import { MinecraftManager } from './core/MinecraftManager'
 import { DevServer } from './dev/server'
 import { Logger } from './util/Logger'
-import { autoUpdater } from 'electron-updater'
 
 export class MainApp {
     public static run() {
         new MainApp()
     }
-    public static isDev = process.env.NODE_ENV === 'development'
+    public static readonly isDev = process.env.NODE_ENV === 'development'
 
     //Main process
     private readonly _AccountManager: AccountManager
@@ -45,13 +45,13 @@ export class MainApp {
     }
 
     constructor() {
+        ConfigurationManager.init()
+
         this._AccountManager = new AccountManager()
         this._Launcher = new MinecraftManager(this)
 
         this._API = new API(this)
         this._Overlay = new Overlay(this)
-
-        ConfigurationManager.init()
 
         app.on('ready', () => {
             this.init()
@@ -66,7 +66,7 @@ export class MainApp {
 
     private async init() {
         if (!MainApp.isDev) await DistributionManager.download()
-        if(process.platform === 'darwin') autoUpdater.autoDownload = false
+        if (process.platform === 'darwin') autoUpdater.autoDownload = false
         autoUpdater.logger = Logger.get()
         this.createWindow()
     }

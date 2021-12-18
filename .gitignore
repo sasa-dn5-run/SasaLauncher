@@ -15,5 +15,7 @@
 /product
 
 /.vscode
-/.sasalauncher
 /.env
+
+/.sasalauncher
+/.sasalauncher-dev

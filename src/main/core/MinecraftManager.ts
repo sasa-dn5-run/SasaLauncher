@@ -5,7 +5,8 @@ import path from 'path'
 import fs from 'fs-extra'
 import { ILauncherOptions, IOverrides } from 'minecraft-launcher-core'
 import { MainApp } from '..'
-import { File, Mod } from '../../@types/Distribution'
+import { File, Mod, ServerOption } from '../../@types/Distribution'
+import { ErrorConstants } from '../../@types/ErrorConstants'
 import { Constants } from '../Constants'
 import { SasaClient } from './Client'
 import { ConfigurationManager } from './ConfigurationManager'
@@ -29,8 +30,8 @@ export class MinecraftManager {
         const dir = path.join(config.MinecraftDataFolder, id, 'mods')
         const exists = fs.existsSync(dir)
 
-        const mods: Mod[] = option.mods.map(m => {
-            m.enabled = !exists ? true : (!fs.existsSync(path.join(dir, m.name)) && !fs.existsSync(path.join(dir, m.name + '.disabled')))
+        const mods: Mod[] = option.mods.map((m) => {
+            m.enabled = !exists ? true : !fs.existsSync(path.join(dir, m.name)) && !fs.existsSync(path.join(dir, m.name + '.disabled'))
             return m
         })
         if (exists) {
@@ -41,7 +42,7 @@ export class MinecraftManager {
                 const modinfo = option.mods.find((mod) => mod.name === name)
                 if (modinfo) {
                     modinfo.enabled = !disabled
-                    mods.splice(mods.indexOf(option.mods.find(v => v.name === name) as Mod), 1, modinfo)
+                    mods.splice(mods.indexOf(option.mods.find((v) => v.name === name) as Mod), 1, modinfo)
                 } else {
                     mods.push({
                         name: name,
@@ -64,17 +65,12 @@ export class MinecraftManager {
 
         const account = this.app.AccountManager.CurrentAccount
         if (!account) {
-            //TODO: エラーを返す
-            throw null
+            throw ErrorConstants.ACCOUNT_NOT_FOUND
         }
 
         const distro = DistributionManager.getDistribution()
 
-        const option = distro.servers.find((v) => v.id === id)
-        if (!option) {
-            //TODO: エラーを返す
-            throw null
-        }
+        const option = distro.servers.find((v) => v.id === id) as ServerOption
 
         await this.saveFiles(option.files)
         await this.saveMods(option.mods)
@@ -86,14 +82,12 @@ export class MinecraftManager {
             IOption.authorization = this.app.AccountManager.refreshMojangAuth(account.refreshToken)
         } else if (account.type === 'microsoft') {
             IOption.authorization = this.app.AccountManager.refreshMicrosoftAuth(account.refreshToken)
-        } else {
-            throw new Error('account type is not supported')
         }
 
         if (!IOption.root || Object.keys(IOption.root).length === 0) IOption.root = path.join(DATA_PATH, '.minecraft')
-        else IOption.root = await this.pathResolve(IOption.root)
+        else IOption.root = this.pathResolve(IOption.root)
 
-        if (IOption.forge) IOption.forge = await this.pathResolve(IOption.forge)
+        if (IOption.forge) IOption.forge = this.pathResolve(IOption.forge)
 
         IOption.overrides.gameDirectory = path.join(config.MinecraftDataFolder, option.id)
 
@@ -169,12 +163,7 @@ export class MinecraftManager {
 
     public addAdditionalMod(id: string, modPath: string) {
         const distro = DistributionManager.getDistribution()
-        const option = distro.servers.find((v) => v.id === id)
-
-        if (!option) {
-            //TODO: エラーを返す
-            throw null
-        }
+        const option = distro.servers.find((v) => v.id === id) as ServerOption
 
         const fileDir = this.pathResolve(`\${MCDATADIR}/${option.id}/mods`)
         if (!fs.existsSync(fileDir)) {
@@ -185,12 +174,7 @@ export class MinecraftManager {
     }
     public removeAdditionalMod(id: string, mod: Mod) {
         const distro = DistributionManager.getDistribution()
-        const option = distro.servers.find((v) => v.id === id)
-
-        if (!option) {
-            //TODO: エラーを返す
-            throw null
-        }
+        const option = distro.servers.find((v) => v.id === id) as ServerOption
 
         const fileDir = this.pathResolve(`\${MCDATADIR}/${option.id}/mods`)
 

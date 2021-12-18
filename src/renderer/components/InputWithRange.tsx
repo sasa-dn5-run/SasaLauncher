@@ -14,7 +14,6 @@ export class InputWithRange extends Component<
     value: string
   }
 > {
-
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -27,7 +26,7 @@ export class InputWithRange extends Component<
       value: e.currentTarget.value,
     })
   }
-  
+
   public render() {
     return (
       <div className={style.container}>

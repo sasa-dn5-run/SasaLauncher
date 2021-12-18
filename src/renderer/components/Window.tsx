@@ -1,7 +1,6 @@
 import React, { Component, RefObject } from 'react'
 
 export class Window extends Component {
-
   private static _instance: RefObject<HTMLDivElement>
   public static get instance() {
     return Window._instance.current as HTMLDivElement

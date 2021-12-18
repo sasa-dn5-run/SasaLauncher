@@ -8,7 +8,7 @@ export class Overlay {
     public close() {
         this.app.MainWindow.webContents.send('overlay:close')
     }
-    public show(message: string, mode: OverlayMode) {
+    public show(message: string, mode: OverlayMode = 'normal') {
         this.app.MainWindow.webContents.send('overlay:show', message, mode)
     }
     public error(error: LauncherErrorType) {

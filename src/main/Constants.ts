@@ -1,8 +1,12 @@
 import path from 'path'
 import { app } from 'electron'
+import { MainApp } from '.'
 
 export class Constants {
-    public static readonly DATA_PATH = path.join(process.platform === 'linux' ? app.getPath('home') : app.getPath('appData'), '.sasalauncher')
+    public static readonly DATA_PATH = path.join(
+        process.platform === 'linux' ? app.getPath('home') : app.getPath('appData'),
+        process.env.NODE_ENV === 'development' ? '.sasalauncher-dev' : '.sasalauncher',
+    )
 
     public static readonly APP_NAME = app.getName()
     public static readonly APP_VERSION = app.getVersion()

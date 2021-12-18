@@ -7,9 +7,8 @@ import style from '../../styles/components/MainWindows/Accounts.module.scss'
 import { BaseWindow, Props } from './BaseWindow'
 
 export class Accounts extends BaseWindow {
-
   public static readonly id = 'Accounts'
-  
+
   constructor(props: Props) {
     super(props, Accounts.id)
     this.state = {

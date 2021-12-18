@@ -1,11 +1,11 @@
 import http from 'http'
 import https from 'https'
 import path from 'path'
+import AdmZip from 'adm-zip'
 import EventEmitter from 'events'
 import fs from 'fs-extra'
 import { Client } from 'minecraft-launcher-core'
 import StrictEventEmitter from 'strict-event-emitter-types/types/src'
-import unzip from 'unzipper'
 import { ServerOption } from '../../@types/Distribution'
 import { Constants } from '../Constants'
 import { Logger } from '../util/Logger'
@@ -99,16 +99,8 @@ export class SasaClient extends (EventEmitter as new () => StrictEventEmitter<Ev
                 })
             })
 
-            await new Promise<void>((resolve, reject) => {
-                fs.createReadStream(temp)
-                    .pipe(
-                        unzip.Extract({
-                            path: path.join(MCLIBDIR, 'libraries'),
-                        }),
-                    )
-                    .on('error', reject)
-                    .on('close', resolve)
-            })
+            const zip = new AdmZip(temp)
+            zip.extractAllTo(path.join(MCLIBDIR, 'libraries'), true)
         } catch (error) {
             this.emit('error', error)
         }

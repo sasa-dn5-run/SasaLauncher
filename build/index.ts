@@ -100,7 +100,7 @@ class Main {
         console.log('Building...')
         const config: CliOptions = {
             config: {
-                appId: pkg.name,
+                appId: pkg.appId,
                 productName: pkg.name,
                 artifactName: '${productName}-setup-${version}.${ext}',
                 copyright: `Copyright © 2021 ${pkg.author}`,
@@ -128,13 +128,6 @@ class Main {
                 mac: {
                     target: 'dmg',
                     category: 'public.app-category.games',
-                },
-                linux: {
-                    target: 'AppImage',
-                    maintainer: pkg.author,
-                    vendor: pkg.author,
-                    description: pkg.description,
-                    category: 'Game',
                 },
                 compression: 'maximum',
                 files: ['./dist/**/*', './node_modules/**/*'],

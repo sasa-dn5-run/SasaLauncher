@@ -4,9 +4,8 @@ import style from '../../styles/components/MainWindows/Debug.module.scss'
 import { BaseWindow, Props } from './BaseWindow'
 
 export class Debug extends BaseWindow {
-
   public static readonly id = 'Debug'
-  
+
   private readonly logRef = React.createRef<HTMLDivElement>()
 
   constructor(props: Props) {

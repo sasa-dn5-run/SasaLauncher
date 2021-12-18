@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import styles from '../styles/components/Frame.module.scss'
 
 export class Frame extends Component {
-  
   public render() {
     return (
       <div className={styles.frame}>

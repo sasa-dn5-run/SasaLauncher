@@ -15,7 +15,6 @@ export class LaunchConfig extends Component<
     mods: Mod[]
   }
 > {
-  
   private ref: RefObject<HTMLDivElement>
   private height!: number
   private mods: {
@@ -50,7 +49,6 @@ export class LaunchConfig extends Component<
     })
   }
   private launch() {
-    GlobalController.Overlay.show('Launching...', 'progress')
     const disabledMods = []
     for (const v of Object.keys(this.mods)) {
       if (this.mods[v] === false) {

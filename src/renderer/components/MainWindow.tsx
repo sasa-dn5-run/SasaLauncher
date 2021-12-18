@@ -9,7 +9,6 @@ import { Login } from './MainWindows/Login'
 import { Setting } from './MainWindows/Setting'
 
 export class MainWindow extends Component {
-  
   constructor(props: any) {
     super(props)
 

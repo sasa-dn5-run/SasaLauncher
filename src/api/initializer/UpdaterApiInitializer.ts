@@ -1,14 +1,12 @@
-import { ipcMain } from "electron";
-import { autoUpdater } from "electron-updater";
-import { MainApp } from "../../main";
+import { ipcMain } from 'electron'
+import { autoUpdater } from 'electron-updater'
+import { MainApp } from '../../main'
 
 export class UpdaterApiInitializer {
-
-    constructor(
-        private readonly app: MainApp
-    ) {
+    constructor(private readonly app: MainApp) {
         ipcMain.on('updater', (event, arg) => {
-            switch(arg){
+            if (MainApp.isDev) return
+            switch (arg) {
                 case 'init': {
                     autoUpdater.on('update-available', () => {
                         event.sender.send('updater', 'update-available')
@@ -44,9 +42,7 @@ export class UpdaterApiInitializer {
                     }
                     break
                 }
-                
             }
         })
     }
-
 }

@@ -6,9 +6,8 @@ import { BaseWindow, Props } from './BaseWindow'
 import { LaunchConfig } from './components/LaunchConfig'
 
 export class Launcher extends BaseWindow {
-
   public static readonly id = 'launcher'
-  
+
   constructor(props: Props) {
     super(props, Launcher.id)
   }

@@ -6,7 +6,6 @@ import style from '../../styles/components/MainWindows/Login.module.scss'
 import { BaseWindow, Props } from './BaseWindow'
 
 export class Login extends BaseWindow {
-
   public static readonly id = 'login'
 
   private readonly user = {
@@ -19,27 +18,15 @@ export class Login extends BaseWindow {
   }
 
   private async MojangLogin() {
-    GlobalController.Overlay.show('ログイン中...')
     const email = this.user.email.current?.value
     const password = this.user.password.current?.value
-    const response = await window.api.account.login('mojang', email, password)
-    if (response.error) {
-      GlobalController.Overlay.error(response.error)
-      return
-    }
+    await window.api.account.login('mojang', email, password)
     await Variable.init()
-    GlobalController.Overlay.close()
   }
 
   private async MicrosoftLogin() {
-    GlobalController.Overlay.show('ログイン中...')
-    const response = await window.api.account.login('microsoft')
-    if (response.error) {
-      GlobalController.Overlay.error(response.error)
-      return
-    }
+    await window.api.account.login('microsoft')
     await Variable.init()
-    GlobalController.Overlay.close()
   }
 
   public render() {

@@ -13,7 +13,7 @@ const configs:Configuration[] = [
             './src/renderer/index.tsx'
         ],
         output: {
-            path: path.resolve(__dirname, 'dist', 'main', 'app'),
+            path: path.resolve(__dirname, 'dist', 'app'),
             publicPath: './',
             filename: '[name].js',
             assetModuleFilename: 'assets/[name][ext]',
@@ -64,7 +64,7 @@ const configs:Configuration[] = [
             preload: './src/preload/index.ts',
         },
         output: {
-            path: path.resolve(__dirname, 'dist', 'main'),
+            path: path.resolve(__dirname, 'dist'),
             filename: '[name].js',
             devtoolModuleFilenameTemplate: '[absolute-resource-path]'
         },

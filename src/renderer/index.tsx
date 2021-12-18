@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Distribution } from '../@types/Distribution'
+import { GlobalController } from './OverlayController'
 import { Variable } from './Variable'
 import { App } from './app'
-import { GlobalController } from './OverlayController'
 
 export class Renderer {
-  
   public static run() {
     new Renderer()
   }
@@ -24,23 +23,23 @@ export class Renderer {
     ReactDOM.render(<App />, document.getElementById('root'))
   }
 
-  private initUpdater(){
+  private initUpdater() {
     window.api.on('updater', async (event, arg, err) => {
-      switch(arg){
-        case 'update-available':{
-          if(Variable.updating) GlobalController.Overlay.change('新しいバージョンがあります')
+      switch (arg) {
+        case 'update-available': {
+          if (Variable.updating) GlobalController.Overlay.change('新しいバージョンがあります')
           break
         }
-        case 'update-downloaded':{
+        case 'update-downloaded': {
           if (Variable.updating) {
             const answer = await GlobalController.Overlay.question('アップデートを実行します。よろしいですか？')
-            if(!answer) return
+            if (!answer) return
             window.api.send('updater', 'install')
             Variable.updating = false
           }
           break
         }
-        case 'update-not-available':{
+        case 'update-not-available': {
           if (Variable.updating) {
             GlobalController.Overlay.change('アップデートは見つかりませんでした。')
             Variable.updating = false
@@ -51,7 +50,7 @@ export class Renderer {
           if (Variable.updating) GlobalController.Overlay.change('アップデートを確認しています。')
           break
         }
-        case 'error':{
+        case 'error': {
           if (Variable.updating) {
             GlobalController.Overlay.change('アップデート中にエラーが発生しました。')
             Variable.updating = false

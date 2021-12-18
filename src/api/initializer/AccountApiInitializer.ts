@@ -4,6 +4,7 @@ import { ErrorConstants } from '../../@types/ErrorConstants'
 import { ApiResponse } from '../../@types/_Api'
 import { MainApp } from '../../main'
 import { AccountManager, AuthType } from '../../main/core/AccountManager'
+import { Logger } from '../../main/util/Logger'
 import { IpcMainRouter } from '../types'
 
 export class AccountApiInitializer {
@@ -13,7 +14,7 @@ export class AccountApiInitializer {
             return this.app.AccountManager.Accounts
         })
         router.handle('login', async (e, type: AuthType, email?: string, password?: string) => {
-            let res: ApiResponse = { success: true }
+            this.app.Overlay.show('ログイン中...')
             try {
                 switch (type) {
                     case 'microsoft': {
@@ -21,10 +22,7 @@ export class AccountApiInitializer {
                         const iuser = await this.app.AccountManager.microsoftAuth(code)
 
                         if (this.app.AccountManager.Accounts.find((a) => a.uuid === iuser.uuid)) {
-                            res = {
-                                success: false,
-                                error: ErrorConstants.ACCOUNT_ALREADY_EXISTS,
-                            }
+                            this.app.Overlay.error(ErrorConstants.ACCOUNT_ALREADY_EXISTS)
                             break
                         }
 
@@ -33,10 +31,7 @@ export class AccountApiInitializer {
                     }
                     case 'mojang': {
                         if (this.app.AccountManager.Accounts.find((a) => a.email === email)) {
-                            res = {
-                                success: false,
-                                error: ErrorConstants.ACCOUNT_ALREADY_EXISTS,
-                            }
+                            this.app.Overlay.error(ErrorConstants.ACCOUNT_ALREADY_EXISTS)
                             break
                         }
 
@@ -48,19 +43,11 @@ export class AccountApiInitializer {
                         break
                     }
                 }
+                this.app.Overlay.close()
             } catch (error) {
-                if (error instanceof AuthenticationError) {
-                    console.error(error)
-                    res = {
-                        success: false,
-                        error: {
-                            code: error.name,
-                            message: error.message,
-                        },
-                    }
-                }
+                this.app.Overlay.error(ErrorConstants.UNKNOWN_ERROR)
+                Logger.get().error(error)
             }
-            return res
         })
         router.handle('logout', (e, account: Account) => {
             this.app.AccountManager.removeAccount(account)

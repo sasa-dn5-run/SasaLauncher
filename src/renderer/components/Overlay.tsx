@@ -7,7 +7,7 @@ import { Window } from './Window'
 
 export type OverlayMode = 'normal' | 'error' | 'question' | 'progress' | 'loading'
 export class Overlay extends Component<
-  {},
+  any,
   {
     mode: OverlayMode
     msg: string
@@ -20,7 +20,6 @@ export class Overlay extends Component<
     }
   }
 > {
-
   private _Container: RefObject<HTMLDivElement>
   private get container() {
     return this._Container.current as HTMLDivElement
@@ -131,7 +130,6 @@ export class Overlay extends Component<
     })
   }
 
-  
   public render() {
     return (
       <div ref={this._Container} className={style.container}>

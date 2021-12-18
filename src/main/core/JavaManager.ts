@@ -1,11 +1,11 @@
 import http from 'http'
 import https from 'https'
 import path from 'path'
+import AdmZip from 'adm-zip'
 import EventEmitter from 'events'
 import fs from 'fs-extra'
 import StrictEventEmitter from 'strict-event-emitter-types'
 import tar from 'tar'
-import unzip from 'unzipper'
 import { JavaVersion } from '../../@types/Distribution'
 import { Constants } from '../Constants'
 
@@ -125,16 +125,12 @@ export class JavaManager extends (EventEmitter as new () => StrictEventEmitter<E
 
             await new Promise<void>((resolve) => {
                 switch (ext) {
-                    case 'zip':
-                        fs.createReadStream(file)
-                            .pipe(
-                                unzip.Extract({
-                                    path: path.join(Constants.DATA_PATH, 'java'),
-                                }),
-                            )
-                            .on('close', resolve)
+                    case 'zip': {
+                        const zip = new AdmZip(file)
+                        zip.extractAllTo(path.join(Constants.DATA_PATH, 'java'), true)
                         break
-                    case 'tar.gz':
+                    }
+                    case 'tar.gz': {
                         fs.createReadStream(file)
                             .pipe(
                                 tar.x({
@@ -143,6 +139,7 @@ export class JavaManager extends (EventEmitter as new () => StrictEventEmitter<E
                             )
                             .on('close', resolve)
                         break
+                    }
                 }
             })
 

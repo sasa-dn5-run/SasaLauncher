@@ -3,7 +3,15 @@ export interface LauncherErrorType {
     code: string
 }
 
+export const isLauncherError = (error: any): error is LauncherErrorType => {
+    return error.message !== undefined && error.code !== undefined
+}
+
 export class ErrorConstants {
+    public static readonly UNKNOWN_ERROR: LauncherErrorType = {
+        message: 'An unknown error has occurred',
+        code: 'unknown_error',
+    }
     public static readonly ACCOUNT_ALREADY_EXISTS: LauncherErrorType = {
         message: 'アカウントがすでに存在しています。',
         code: '01x010001',
