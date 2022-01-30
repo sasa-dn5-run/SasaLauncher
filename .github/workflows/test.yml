@@ -44,18 +44,3 @@ jobs:
           MS_APP_SECRET: ${{ secrets.MS_APP_SECRET }}
           MS_APP_URL: ${{ secrets.MS_APP_URL }}
           VERSION: '0.0.1'
-
-      #ActionRelease - zip
-      - uses: actions/upload-artifact@v1
-        name: Action-Upload-MacOS1
-        if: matrix.os == 'macos-latest'
-        with:
-          name: MacOS Release
-          path: 'product'
-
-      - uses: actions/upload-artifact@v1
-        name: Action-Upload-Windows1
-        if: matrix.os == 'windows-latest'
-        with:
-          name: Windows Release
-          path: 'product'
